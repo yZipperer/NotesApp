@@ -9,13 +9,21 @@ import SwiftUI
 
 struct Home: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        
+        NavigationView {
+            List(0..<2){ i in
+                Text("Hello World \(i)")
+                    .padding()
+            }
+            
+            .navigationTitle("Notes")
+            .navigationBarItems(trailing: Button(action : {
+                print("Added Note")
+            }, label : {
+                Text("Add Note")
+            }))
         }
-        .padding()
+        
     }
 }
 

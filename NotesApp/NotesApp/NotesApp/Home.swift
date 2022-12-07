@@ -15,6 +15,9 @@ struct Home: View {
                 Text("Hello World \(i)")
                     .padding()
             }
+            .onAppear(perform: {
+                getNotes()
+            })
             
             .navigationTitle("Notes")
             .navigationBarItems(trailing: Button(action : {
@@ -25,6 +28,22 @@ struct Home: View {
         }
         
     }
+    
+    func getNotes() {
+        let url = URL(string: "http://localhost8080/")!
+        
+        let task = URLSession.shared.dataTask(with: url) { data, res, err in
+            guard let data = data else {return}
+        }
+        
+        task.resume()
+    }
+}
+
+struct Note: Identifiable, Codable {
+    var id: String {_id}
+    var _id: String
+    var content: String
 }
 
 struct ContentView_Previews: PreviewProvider {

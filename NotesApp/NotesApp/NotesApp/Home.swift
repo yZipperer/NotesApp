@@ -13,38 +13,72 @@ struct Home: View {
     @State var showCreate = false
     @State var showAlert = false
     @State var itemToDelete: Note?
+    @State var editMode: EditMode = .inactive
+    @State var updateNote = ""
+    @State var updateNoteId = ""
     
     var alert: Alert {
-        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete this note?"), primaryButton: .destructive(Text("Delete")), action: deleteNote, secondaryButton: .cancel())
+        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete this note?"), primaryButton: .destructive(Text("Delete"), action: deleteNote), secondaryButton: .cancel())
     }
     
     var body: some View {
         
         NavigationView {
             List(self.notes){ note in
-                Text(note.content)
-                    .padding()
-                    .onLongPressGesture{
-                        self.showAlert.toggle()
-                        itemToDelete = note
+                if(self.editMode == .inactive){
+                    Text(note.content)
+                        .padding()
+                        .onLongPressGesture{
+                            self.showAlert.toggle()
+                            itemToDelete = note
+                        }
+                } else {
+                    HStack {
+                        Image(systemName: "pencil.circle")
+                            .foregroundColor(.blue)
+                        Text(note.content)
+                            .padding()
                     }
+                    .onTapGesture {
+                        self.updateNote = note.content
+                        self.updateNoteId = note._id
+                        self.showCreate.toggle()
+                    }
+                }
             }
             .alert(isPresented: $showAlert, content: {
                 alert
-            })
-            .sheet(isPresented: $showCreate, onDismiss: getNotes, content: {
-                NewNoteView()
             })
             .onAppear(perform: {
                 getNotes()
             })
             
             .navigationTitle("Notes")
-            .navigationBarItems(trailing: Button(action : {
+            .navigationBarItems(leading: Button(action: {
+                if(self.editMode == .inactive){
+                    self.editMode = .active
+                } else {
+                    self.editMode = .inactive
+                }
+            }, label: {
+                if(self.editMode == .inactive){
+                    Text("Edit")
+                } else {
+                    Text("Done")
+                }
+            }),
+            trailing: Button(action : {
                 self.showCreate.toggle()
             }, label : {
                 Text("Add Note")
-            }))
+            }).sheet(isPresented: $showCreate, onDismiss: getNotes, content: {
+                if(self.editMode == .inactive){
+                    NewNoteView()
+                } else {
+                    UpdateNoteView(content: $updateNote, noteId: $updateNoteId)
+                }
+            })
+            )
         }
         
     }
@@ -63,6 +97,10 @@ struct Home: View {
         }
         
         task.resume()
+        
+        if(self.editMode == .active){
+            self.editMode = .inactive
+        }
     }
     
     func deleteNote() {

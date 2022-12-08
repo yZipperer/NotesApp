@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5726FA2E29419C74005817AF /* NewNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726FA2D29419C74005817AF /* NewNoteView.swift */; };
+		5726FA302941AAE5005817AF /* UpdateNoteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5726FA2F2941AAE5005817AF /* UpdateNoteView.swift */; };
 		576000E02940FE04000BE1EB /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576000DF2940FE04000BE1EB /* Home.swift */; };
 		576000E22940FE04000BE1EB /* NotesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 576000E12940FE04000BE1EB /* NotesApp.swift */; };
 		576000E42940FE04000BE1EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 576000E32940FE04000BE1EB /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		5726FA2D29419C74005817AF /* NewNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteView.swift; sourceTree = "<group>"; };
+		5726FA2F2941AAE5005817AF /* UpdateNoteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateNoteView.swift; sourceTree = "<group>"; };
 		576000DC2940FE04000BE1EB /* NotesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NotesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		576000DF2940FE04000BE1EB /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		576000E12940FE04000BE1EB /* NotesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesApp.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				576000ED2940FEF5000BE1EB /* Info.plist */,
 				576000DF2940FE04000BE1EB /* Home.swift */,
+				5726FA2F2941AAE5005817AF /* UpdateNoteView.swift */,
 				576000E12940FE04000BE1EB /* NotesApp.swift */,
 				576000E32940FE04000BE1EB /* Assets.xcassets */,
 				576000E52940FE04000BE1EB /* Preview Content */,
@@ -145,6 +148,7 @@
 				576000E22940FE04000BE1EB /* NotesApp.swift in Sources */,
 				5726FA2E29419C74005817AF /* NewNoteView.swift in Sources */,
 				576000E02940FE04000BE1EB /* Home.swift in Sources */,
+				5726FA302941AAE5005817AF /* UpdateNoteView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

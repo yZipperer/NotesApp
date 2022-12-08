@@ -11,6 +11,12 @@ struct Home: View {
     
     @State var notes = [Note]()
     @State var showCreate = false
+    @State var showAlert = false
+    @State var itemToDelete: Note?
+    
+    var alert: Alert {
+        Alert(title: Text("Delete"), message: Text("Are you sure you want to delete this note?"), primaryButton: .destructive(Text("Delete")), action: deleteNote, secondaryButton: .cancel())
+    }
     
     var body: some View {
         
@@ -18,7 +24,14 @@ struct Home: View {
             List(self.notes){ note in
                 Text(note.content)
                     .padding()
+                    .onLongPressGesture{
+                        self.showAlert.toggle()
+                        itemToDelete = note
+                    }
             }
+            .alert(isPresented: $showAlert, content: {
+                alert
+            })
             .sheet(isPresented: $showCreate, onDismiss: getNotes, content: {
                 NewNoteView()
             })
@@ -50,6 +63,35 @@ struct Home: View {
         }
         
         task.resume()
+    }
+    
+    func deleteNote() {
+        
+        guard let id = itemToDelete?._id else {return}
+        
+        let url = URL(string: "http://localhost:8080/notes/\(id)")!
+        
+        var request = URLRequest(url: url)
+        
+        request.httpMethod = "DELETE"
+        
+        let task = URLSession.shared.dataTask(with: request) {data, res, err in
+            guard err == nil else {return}
+            
+            guard let data = data else {return}
+            
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]{
+                    print(json)
+                }
+            } catch let error {
+                print(error)
+            }
+        }
+        
+        task.resume()
+        
+        getNotes()
     }
 }
 

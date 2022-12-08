@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct Home: View {
+    
+    @State var notes = [Note]()
+    
     var body: some View {
         
         NavigationView {
-            List(0..<2){ i in
-                Text("Hello World \(i)")
+            List(self.notes){ note in
+                Text(note.content)
                     .padding()
             }
             .onAppear(perform: {
@@ -30,10 +33,16 @@ struct Home: View {
     }
     
     func getNotes() {
-        let url = URL(string: "http://localhost8080/")!
+        let url = URL(string: "http://localhost:8080/notes")!
         
         let task = URLSession.shared.dataTask(with: url) { data, res, err in
             guard let data = data else {return}
+            
+            do{
+                self.notes = try JSONDecoder().decode([Note].self, from: data)
+            } catch {
+                print(error)
+            }
         }
         
         task.resume()

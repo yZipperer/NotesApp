@@ -10,6 +10,7 @@ import SwiftUI
 struct Home: View {
     
     @State var notes = [Note]()
+    @State var showCreate = false
     
     var body: some View {
         
@@ -18,13 +19,16 @@ struct Home: View {
                 Text(note.content)
                     .padding()
             }
+            .sheet(isPresented: $showCreate, content: {
+                NewNoteView()
+            })
             .onAppear(perform: {
                 getNotes()
             })
             
             .navigationTitle("Notes")
             .navigationBarItems(trailing: Button(action : {
-                print("Added Note")
+                self.showCreate.toggle()
             }, label : {
                 Text("Add Note")
             }))
